@@ -1,0 +1,86 @@
+<!-- templates/dashboard.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tech Growth Scanner</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Pre-Explosion Tech Stock Patterns</h1>
+        
+        <div class="filters">
+            <select id="sectorFilter">
+                <option value="all">All Tech Sectors</option>
+                <option value="semiconductor">Semiconductors</option>
+                <option value="software">Software</option>
+                <option value="cloud">Cloud Computing</option>
+            </select>
+            
+            <input type="range" id="growthThreshold" min="3" max="10" value="5">
+            <span id="thresholdValue">5x</span>
+        </div>
+        
+        <div id="resultsGrid" class="grid"></div>
+        <div id="patternChart" style="width:100%;height:500px;"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/scan')
+                .then(response => response.json())
+                .then(data => {
+                    renderResults(data);
+                    renderPatternChart(data);
+                });
+                
+            document.getElementById('growthThreshold').addEventListener('input', function() {
+                document.getElementById('thresholdValue').textContent = this.value + 'x';
+                // Would add filtering logic here
+            });
+        });
+        
+        function renderResults(stocks) {
+            const grid = document.getElementById('resultsGrid');
+            grid.innerHTML = '';
+            
+            stocks.forEach(stock => {
+                const card = document.createElement('div');
+                card.className = 'stock-card';
+                
+                card.innerHTML = `
+                    <h3>${stock.ticker} - ${stock.info.shortName}</h3>
+                    <p>Sector: ${stock.info.sector}</p>
+                    <div class="metrics">
+                        <div class="metric">
+                            <label>Pre-Growth Volume Trend</label>
+                            <div class="bar" style="width: ${Math.abs(stock.analysis.volume_trend)*100}%"></div>
+                        </div>
+                        <div class="metric">
+                            <label>Consolidation Ratio</label>
+                            <span>${stock.analysis.price_consolidation.toFixed(2)}</span>
+                        </div>
+                    </div>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+        
+        function renderPatternChart(stocks) {
+            // Extract common patterns for visualization
+            const trace = {
+                x: stocks.map(s => s.ticker),
+                y: stocks.map(s => s.analysis.price_consolidation),
+                type: 'bar',
+                name: 'Consolidation Before Growth'
+            };
+            
+            Plotly.newPlot('patternChart', [trace], {
+                title: 'Common Pre-Growth Patterns in Tech Stocks'
+            });
+        }
+    </script>
+</body>
+</html>
