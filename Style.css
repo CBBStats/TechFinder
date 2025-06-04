@@ -1,0 +1,200 @@
+/* static/styles.css */
+:root {
+  --primary: #4361ee;
+  --secondary: #3f37c9;
+  --accent: #4895ef;
+  --dark: #1a1a2e;
+  --light: #f8f9fa;
+  --success: #4cc9f0;
+  --danger: #f72585;
+  --warning: #f8961e;
+  --info: #560bad;
+}
+
+body {
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  background-color: #f5f7fa;
+  color: var(--dark);
+  line-height: 1.6;
+}
+
+/* Header Styles */
+.header {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  padding: 2rem 0;
+  margin-bottom: 2rem;
+  border-radius: 0 0 20px 20px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.header h1 {
+  font-weight: 700;
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.header p.subtitle {
+  opacity: 0.9;
+  font-size: 1.1rem;
+}
+
+/* Card Styles */
+.card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px rgba(0,0,0,0.1);
+}
+
+.card-header {
+  background-color: var(--primary);
+  color: white;
+  font-weight: 600;
+  padding: 1rem 1.5rem;
+}
+
+.stock-card {
+  background: white;
+  border-left: 4px solid var(--accent);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.stock-card:hover {
+  border-left-width: 8px;
+  box-shadow: 0 8px 25px rgba(67, 97, 238, 0.15);
+}
+
+/* Progress Bars */
+.progress {
+  height: 10px;
+  border-radius: 5px;
+  background-color: #e9ecef;
+}
+
+.progress-bar {
+  background: linear-gradient(90deg, var(--accent), var(--success));
+  transition: width 1s ease-in-out;
+}
+
+/* Badges */
+.badge {
+  font-weight: 500;
+  padding: 0.35em 0.65em;
+  border-radius: 8px;
+}
+
+.bg-success {
+  background-color: var(--success) !important;
+}
+
+/* Filters Section */
+.form-range::-webkit-slider-thumb {
+  background: var(--primary);
+}
+
+.form-range:focus::-webkit-slider-thumb {
+  box-shadow: 0 0 0 1px #fff, 0 0 0 0.25rem rgba(67, 97, 238, 0.25);
+}
+
+#scoreValue {
+  font-weight: 600;
+  color: var(--primary);
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: var(--primary);
+  border: none;
+  padding: 0.5rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.btn-primary:hover {
+  background-color: var(--secondary);
+  transform: translateY(-2px);
+}
+
+/* Responsive Grid */
+@media (max-width: 768px) {
+  .header h1 {
+    font-size: 2rem;
+  }
+  
+  .card {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+#resultsContainer {
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* Tooltip Styles */
+.tooltip-indicator {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-color: var(--accent);
+  color: white;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 16px;
+  font-size: 12px;
+  cursor: help;
+  margin-left: 5px;
+}
+
+/* Metric Highlights */
+.metric-highlight {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.positive {
+  color: var(--success);
+}
+
+.negative {
+  color: var(--danger);
+}
+
+/* Refresh Button Loader */
+#refreshBtn.loading {
+  position: relative;
+  pointer-events: none;
+}
+
+#refreshBtn.loading::after {
+  content: "";
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  margin-top: -8px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
